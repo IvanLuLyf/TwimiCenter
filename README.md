@@ -55,16 +55,16 @@ Response:
 {
     "status":"ok",
     "page":"[Current Page]",
-	"posts":[
-		{
-			"tid":"[Post ID]",
-			"username":"[Post Creater]",
-			"nickname":"[Post Creater's Nickname]",
-			"title":"[Post Title]",
-			"message":"[Post Content]",
-			"timeline":"[time stamp]"
-		}
-	]
+    "posts":[
+        {
+            "tid":"[Post ID]",
+            "username":"[Post Creater]",
+            "nickname":"[Post Creater's Nickname]",
+            "title":"[Post Title]",
+            "message":"[Post Content]",
+            "timeline":"[time stamp]"
+        }
+    ]
 }
 ```
 
