@@ -1,9 +1,9 @@
 <?php
 if (!defined("IN_TWIMI_PHP")) die('{"status":"forbidden access"}');
-$con = TDBConnect();
-$user = GetUser();
-$action = GetParam("action");
-if ($action == "post") {
+
+function ac_post(){
+	$con = TDBConnect();
+	$user = GetUser();
 	if ($user != null) {
 		$title = GetParam('title');
 		$message = GetParam('message');
@@ -21,14 +21,24 @@ if ($action == "post") {
 	} else {
 		echo ('{"status":"invalid token"}');
 	}
-}else if($action == "view"){
+	TDBClose($con);
+}
+
+function ac_view(){
+	$con = TDBConnect();
+	$user = GetUser();
 	$page = intval(GetParam("page"));
 	if($page==0) $page=1;
 	$rowCnt = 20 * ($page - 1);
 	$posts = TDBFetchAll("SELECT * FROM tp_posts order by tid desc LIMIT {$rowCnt},20 ");
 	$rsp = array('status' => 'ok','page' => $page,'posts' => $posts);
 	echo(json_encode($rsp));
-}else if($action == "mypost"){
+	TDBClose($con);
+}
+
+function ac_mypost(){
+	$con = TDBConnect();
+	$user = GetUser();
 	if ($user != null) {
 		$page = intval(GetParam("page"));
 		if($page==0) $page=1;		
@@ -40,7 +50,12 @@ if ($action == "post") {
 	} else {
 		echo ('{"status":"invalid token"}');
 	}
-}else if($action == "viewpost"){
+	TDBClose($con);
+}
+
+function ac_viewpost(){
+	$con = TDBConnect();
+	$user = GetUser();
 	$tid = GetParam("tid");
 	if($tid!=""){
 		$page = intval(GetParam("page"));
@@ -53,7 +68,12 @@ if ($action == "post") {
 	}else{
 		echo ('{"status":"empty tid"}');
 	}
-}else if($action == "comment"){
+	TDBClose($con);
+}
+
+function ac_comment(){
+	$con = TDBConnect();
+	$user = GetUser();
 	if ($user != null) {
 		$tid = GetParam("tid");
 		if($tid!=""){
@@ -75,7 +95,12 @@ if ($action == "post") {
 	} else {
 		echo ('{"status":"invalid token"}');
 	}
-}else if($action == "delete"){
+	TDBClose($con);
+}
+
+function ac_delete(){
+	$con = TDBConnect();
+	$user = GetUser();
 	if ($user != null) {
 		$tid = GetParam("tid");
 		if($tid!=""){
@@ -94,8 +119,30 @@ if ($action == "post") {
 	} else {
 		echo ('{"status":"invalid token"}');
 	}
-}else{
-	echo ('{"status":"invalid action"}');
+	TDBClose($con);
 }
-TDBClose($con);
+
+function ac_deletecomment(){
+	$con = TDBConnect();
+	$user = GetUser();
+	if ($user != null) {
+		$cmid = GetParam("cmid");
+		if($cmid!=""){
+			$comment = TDBFetchOne("SELECT * FROM tp_comments WHERE cmid='$cmid' ");
+			if($comment['username']==$user['username']){
+				$dcmid = TDBDelete("tp_comments"," cmid='$cmid' ");
+				$rsp = array('status' => 'ok' , 'cmid' => $dcmid);
+				echo (json_encode($rsp));
+			}else{
+				echo ('{"status":"invalid access"}');
+			}
+		}else{
+			echo ('{"status":"empty cmid"}');
+		}
+	} else {
+		echo ('{"status":"invalid token"}');
+	}	
+	TDBClose($con);
+}
+
 ?>
