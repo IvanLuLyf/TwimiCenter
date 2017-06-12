@@ -1,7 +1,7 @@
 # TwimiCenter
 
 ## User Login
-URL : `index.php?mod=login&username=[Your Username]&password=[Your Password]`
+URL : `api.php?mod=login&username=[Your Username]&password=[Your Password]`
 
 Response:
 
@@ -17,7 +17,7 @@ Response:
 ------------
 
 ## User Register
-URL : `index.php?mod=register&username=[Your Username]&password=[Your Password]&email=[Your Email]&nickname=[Your Nickname(Optional)]`
+URL : `api.php?mod=register&username=[Your Username]&password=[Your Password]&email=[Your Email]&nickname=[Your Nickname(Optional)]`
 
 Response:
 
@@ -33,7 +33,7 @@ Response:
 ------------
 
 ## Post New Post
-URL : `index.php?mod=post&action=post&token=[Your AccessToken]&title=[Post Title]&message=[Post Content]`
+URL : `api.php?mod=post&action=post&token=[Your AccessToken]&title=[Post Title]&message=[Post Content]`
 
 Response:
 
@@ -47,7 +47,7 @@ Response:
 ------------
 
 ## Post View Post List
-URL : `index.php?mod=post&action=view&page=[Post List Page(Optional)]`
+URL : `api.php?mod=post&action=view&page=[Post List Page(Optional)]`
 
 Response:
 
