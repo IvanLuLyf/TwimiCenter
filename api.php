@@ -14,8 +14,14 @@
 	if($mod!=""){
 		if(file_exists("mods/$mod.php")){
 			include "mods/$mod.php";
-			if($action!="" && is_callable($action)){
-				call_user_func($action);
+			if($action!=""){
+				if(is_callable($action)){
+					call_user_func($action);
+				}else{
+					echo '{"status":"action not exists"}';
+				}
+			}else{
+				echo '{"status":"action is empty"}';
 			}
 		}else{
 			echo '{"status":"mod not exists"}';

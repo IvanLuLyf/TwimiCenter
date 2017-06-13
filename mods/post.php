@@ -10,7 +10,7 @@ function ac_post(){
 		$username = $user["username"];
 		$nickname = $user["nickname"];
 		$timeline = time();
-		if ($title != "" && message != "") {
+		if ($title != "" && $message != "") {
 			$datas = array('username' => $username, 'nickname' => $nickname, 'title' => $title, 'message' => $message, 'timeline' => $timeline);
 			$tid = TDBInsert($datas, "tp_posts");
 			$rsp = array('status' => 'ok' , 'tid' => $tid);
