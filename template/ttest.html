@@ -1,0 +1,41 @@
+<html>
+<head>
+	<title><?php echo constant("TP_SITENAME");?></title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="js/jquery.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/common.css" rel="stylesheet">
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+</head>
+<body>
+	<?php include 'template/header.html'; ?>
+	<?php include 'template/sidebar.html'; ?>
+    <div class="container">
+		<div class="row">
+			<div class="col-md-2 col-lg-2"></div>
+			<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+				<ul class="breadcrumb hidden-xs">
+					<li>
+						<a href="index.php"><?php echo constant("TP_SITENAME");?></a> <span class="divider"></span>
+					</li>
+					<li class="active">
+						<a href="#">Test</a>
+					</li>
+				</ul>
+				<div class="postcard">
+					<div class="postcard-body">
+						<p>Token Info:<?php echo $strTokeninfo;?></p>
+						<p>Uid:<?php echo $TuserInfo->id;?></p>
+						<p>Uesrname:<?php echo $TuserInfo->username;?></p>
+						<p>Nickname:<?php echo $TuserInfo->nickname;?></p>
+						<p>Email:<?php echo $TuserInfo->email;?></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<?php include 'template/footer.html'; ?>
+</body>
+</html>

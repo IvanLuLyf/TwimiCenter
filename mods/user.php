@@ -23,6 +23,16 @@ function ac_update(){
 	TDBClose($con);
 }
 
+function ac_getinfo(){
+	$user = GetUser();
+	if ($user != null) {
+		$rsp = array('status' => 'ok' , 'id' => $user['id'], 'username' => $user['username'], 'nickname' => $user['nickname'], 'email' => $user['email']);
+		echo (json_encode($rsp));
+	} else {
+		echo ('{"status":"invalid token"}');
+	}
+}
+
 function ac_login(){
 	$con = TDBConnect();
 	$username = GetParam("username");

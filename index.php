@@ -10,17 +10,19 @@
 	}
 	$mod = GetParam("mod");
 	$action = "ac_".GetParam("action");
-	include "auth.php";
+	include "uiauth.php";
 	if($mod!=""){
-		if(file_exists("mods/$mod.php")){
-			include "mods/$mod.php";
+		if(file_exists("uimods/$mod.php")){
+			include "uimods/$mod.php";
 			if($action!="" && is_callable($action)){
 				call_user_func($action);
+			}else if($action=="ac_" && is_callable("ac_index")){
+				call_user_func("ac_index");
 			}
 		}else{
 			echo '{"status":"mod not exists"}';
 		}
 	}else{
-		echo '{"status":"mod is empty"}';
+		header('Location: index.php?mod=index');
 	}
 ?>
