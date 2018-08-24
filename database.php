@@ -8,7 +8,8 @@ class database
     private function __construct()
     {
         $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
-        $this->conn = new PDO($dsn, DB_USER, DB_PASS);
+        $option = array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC);
+        $this->conn = new PDO($dsn, DB_USER, DB_PASS, $option);
     }
 
     public static function getInstance(): database
@@ -25,8 +26,8 @@ class database
         $values = implode(',:', array_keys($data));
         $sql = "insert into {$table} ({$keys}) values(:{$values})";
         $pst = $this->conn->prepare($sql);
-        foreach ($data as $k => $v) {
-            $pst->bindParam(':' . $k, $value);
+        foreach ($data as $k => &$v) {
+            $pst->bindParam(':' . $k, $v);
         }
         $pst->execute();
         return $this->conn->lastInsertId();
@@ -42,11 +43,11 @@ class database
         $where = $where == null ? '' : ' WHERE ' . $where;
         $sql = "update {$table} set {$updates} {$where}";
         $pst = $this->conn->prepare($sql);
-        foreach ($data as $k => $v) {
-            $pst->bindParam(':' . $k, $value);
+        foreach ($data as $k => &$v) {
+            $pst->bindParam(':' . $k, $v);
         }
-        foreach ($condition as $k => $v) {
-            $pst->bindParam(':' . $k, $value);
+        foreach ($condition as $k => &$v) {
+            $pst->bindParam(':' . $k, $v);
         }
         $pst->execute();
         return $pst->rowCount();
@@ -57,8 +58,8 @@ class database
         $where = $where == null ? '' : ' WHERE ' . $where;
         $sql = "delete from {$table} {$where}";
         $pst = $this->conn->prepare($sql);
-        foreach ($condition as $k => $v) {
-            $pst->bindParam(':' . $k, $value);
+        foreach ($condition as $k => &$v) {
+            $pst->bindParam(':' . $k, $v);
         }
         $pst->execute();
         return $pst->rowCount();
@@ -67,8 +68,8 @@ class database
     public function fetchOne($sql, $condition = [])
     {
         $pst = $this->conn->prepare($sql);
-        foreach ($condition as $k => $v) {
-            $pst->bindParam(':' . $k, $value);
+        foreach ($condition as $k => &$v) {
+            $pst->bindParam(':' . $k, $v);
         }
         $pst->execute();
         return $pst->fetch();
@@ -77,8 +78,8 @@ class database
     public function fetchAll($sql, $condition = [])
     {
         $pst = $this->conn->prepare($sql);
-        foreach ($condition as $k => $v) {
-            $pst->bindParam(':' . $k, $value);
+        foreach ($condition as $k => &$v) {
+            $pst->bindParam(':' . $k, $v);
         }
         $pst->execute();
         return $pst->fetchAll();
