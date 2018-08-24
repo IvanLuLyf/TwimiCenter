@@ -42,16 +42,14 @@ function ac_getavatar()
             echo $img_url;
         }
     } else if (isset($_REQUEST['username'])) {
-        echo "WTF";
-        if ($uid = database::getInstance()->fetchOne("select * from tp_user where username=:username", ['username' => $_REQUEST['username']])) {
-            echo "uid = $uid";
+        if ($uid = database::getInstance()->fetchOne("select * from tp_user where username=:username", ['username' => $_REQUEST['username']])['id']) {
             if ($row = database::getInstance()->fetchOne("select * from tp_avatar where uid=:uid", ['uid' => $uid])) {
                 $img_url = $row['url'];
                 echo $img_url;
             }
         }
     }
-    //Header("Location:$img_url");
+    Header("Location:$img_url");
 }
 
 function ac_login()
