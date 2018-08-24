@@ -9,7 +9,7 @@ if (strtolower($_SERVER['REQUEST_METHOD']) == 'get') {
     include 'template/login.html';
 } else if (isset($_POST["username"])) {
     $username = $_POST["username"];
-    if ($row = database::getInstance()->fetchOne("select * from tp_user where username=:username", [':username' => $username])) {
+    if ($row = database::getInstance()->fetchOne("select * from tp_user where username=:username", ['username' => $username])) {
         if (isset($_POST["password"]) && $row['password'] == md5($_POST["password"])) {
             $tp_id = $row['id'];
             $tp_token = md5(strtolower($username) . $tp_id);

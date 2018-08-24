@@ -54,8 +54,8 @@ function ac_viewpost()
         $tid = intval($_REQUEST['tid']);
         $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
         $rowCnt = 20 * ($page - 1);
-        $post = database::getInstance()->fetchOne("select tp_posts.*,tp_user.nickname from tp_posts left join tp_user on (tp_posts.username=tp_user.username) where tid=:tid", [':tid' => $tid]);
-        $comments = database::getInstance()->fetchAll("select tp_comments.*,tp_user.nickname from tp_comments left join tp_user on (tp_comments.username=tp_user.username) where tid=:tid and aid=1 LIMIT {$rowCnt},20 ", [':tid' => $tid]);
+        $post = database::getInstance()->fetchOne("select tp_posts.*,tp_user.nickname from tp_posts left join tp_user on (tp_posts.username=tp_user.username) where tid=:tid", ['tid' => $tid]);
+        $comments = database::getInstance()->fetchAll("select tp_comments.*,tp_user.nickname from tp_comments left join tp_user on (tp_comments.username=tp_user.username) where tid=:tid and aid=1 LIMIT {$rowCnt},20 ", ['tid' => $tid]);
         include 'template/viewpost.html';
     } else {
         echo('{"status":"empty tid"}');
