@@ -1,5 +1,10 @@
 <?php
 if (!defined("IN_TWIMI_PHP")) die('{"status":"forbidden access"}');
+if (isset($_REQUEST['referrer'])) {
+    session_start();
+    $referer = $_REQUEST['referrer'];
+    $_SESSION['referer'] = $referer;
+}
 if (strtolower($_SERVER['REQUEST_METHOD']) == 'get') {
     include 'template/login.html';
 } else if (isset($_POST["username"])) {
