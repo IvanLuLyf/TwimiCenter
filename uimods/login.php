@@ -15,7 +15,7 @@ if (strtolower($_SERVER['REQUEST_METHOD']) == 'get') {
             $tp_token = md5(strtolower($username) . $tp_id);
             $rsp = ['status' => 'ok', 'id' => $tp_id, 'username' => $row['username'], 'email' => $row['email'], 'token' => $tp_token, 'nickname' => $row['nickname']];
             $updates = ['token' => $tp_token];
-            database::getInstance()->update($updates, "tp_user", "id=:uid", [':uid' => $tp_id]);
+            database::getInstance()->update($updates, "tp_user", "id=:uid", ['uid' => $tp_id]);
             session_start();
             $_SESSION['access_token'] = $tp_token;
             header('Location: index.php?mod=index');
