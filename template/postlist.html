@@ -1,54 +1,40 @@
 <html>
 <head>
-	<title><?php echo constant("TP_MODNAME")."-".constant("TP_SITENAME");?></title>
+	<title><?php echo constant("TP_MOD_NAME")."-".constant("TP_SITE_NAME");?></title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0;">
 	<script src="js/jquery.min.js"></script>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<script src="js/fourm.js?v=20170804"></script>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/common.css" rel="stylesheet">
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 </head>
 <body>
-	<?php include 'template/header.html'; ?>
-	<?php include 'template/sidebar.html'; ?>
-	<div class="fab-div">
-		<button onclick="window.location.href='index.php?mod=post&action=post'" class="btn btn-info btn-circle btn-lg"><i class="glyphicon glyphicon-plus"></i></button>
-	</div>
-    <div class="container">
-		<div class="row">
-			<div class="col-md-2 col-lg-2"></div>
-			<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
-				<ul class="breadcrumb hidden-xs">
-					<li>
-						<a href="index.php"><?php echo constant("TP_SITENAME");?></a> <span class="divider"></span>
-					</li>
-					<li class="active">
-						<a href="#">论坛</a>
-					</li>
-				</ul>
-				<div class="postcard-list">
-					<?php foreach($posts as $post) : ?>
-					<div class="postcard">
-						<div class="postcard-title">
-							<div class="pull-left">
-							<img class="img-responsive img-circle img-avatar" src="http://sdaly.oss-cn-shenzhen.aliyuncs.com/images/face/c/98/1_s.jpg">
-							</div>
-							<div class="postcard-info">
-								<div><?php echo $post['nickname'];?>(<?php echo $post['username'];?>)</div>
-								<div class="postcard-time"><?php echo date('Y-m-d H:i:s', $post['timeline']);?></div>
-							</div>
-						</div>
-						<div class="postcard-body" onclick="window.location.href='index.php?mod=post&action=viewpost&tid=<?php echo $post['tid'];?>'">
-							<h3><a href="index.php?mod=post&action=viewpost&tid=<?php echo $post['tid'];?>"><?php echo $post['title'];?></a></h3>  
-							<p><?php echo chinesesubstr($post['message'],0,20);?></p>
-						</div>
-					</div>
-					<?php endforeach; ?>
-				</div>
+<?php include 'template/header.html'; ?>
+<?php include 'template/sidebar.html'; ?>
+<div class="fab-div">
+	<button onclick="window.location.href='index.php?mod=post&action=post'" class="btn btn-info btn-circle btn-lg"><i class="glyphicon glyphicon-plus"></i></button>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-2 col-lg-2"></div>
+		<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+			<ul class="breadcrumb hidden-xs">
+				<li>
+					<a href="index.php"><?php echo constant("TP_SITE_NAME");?></a> <span class="divider"></span>
+				</li>
+				<li class="active">
+					<a href="#">论坛</a>
+				</li>
+			</ul>
+			<div class="postcard-list" id="listDiv">
+
 			</div>
+			<div id="loadDiv"></div>
 		</div>
 	</div>
-	<?php include 'template/footer.html'; ?>
+</div>
+<?php include 'template/footer.html'; ?>
 </body>
 </html>
