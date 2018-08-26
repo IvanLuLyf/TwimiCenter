@@ -1,6 +1,6 @@
 <?php
 if (!defined("IN_TWIMI_PHP")) die('{"status":"forbidden access"}');
-define("TP_MODNAME", "论坛");
+define("TP_MOD_NAME", "论坛");
 
 function ac_index()
 {
