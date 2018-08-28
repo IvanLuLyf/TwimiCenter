@@ -79,7 +79,7 @@ function ac_comment()
             echo('{"status":"empty tid"}');
         }
     } else {
-        view::redirect('index.php?mod=login&referrer=' . urlencode(view::get_url('post', 'post')));
+        view::redirect('index.php?mod=login&referrer=' . urlencode(view::get_url('post', 'viewpost', ['tid' => $_REQUEST['tid']])));
     }
 }
 
