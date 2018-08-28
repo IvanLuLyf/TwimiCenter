@@ -1,12 +1,10 @@
 <?php
 if (!defined("IN_TWIMI_PHP")) die('{"status":"forbidden access"}');
-if (isset($_REQUEST['referrer'])) {
-    session_start();
-    $referer = $_REQUEST['referrer'];
-    $_SESSION['referer'] = $referer;
-}
 if (strtolower($_SERVER['REQUEST_METHOD']) == 'get') {
-    include 'template/login.html';
+    if (isset($_REQUEST['referer'])) {
+        $referer = $_REQUEST['referer'];
+    }
+    view::render('login.html', ['referer' => $referer]);
 } else if (isset($_POST["username"])) {
     $username = $_POST["username"];
     if ($row = database::getInstance()->fetchOne("select * from tp_user where username=:username", ['username' => $username])) {
@@ -18,18 +16,16 @@ if (strtolower($_SERVER['REQUEST_METHOD']) == 'get') {
             database::getInstance()->update($updates, "tp_user", "id=:uid", ['uid' => $tp_id]);
             session_start();
             $_SESSION['access_token'] = $tp_token;
-            if (isset($_REQUEST['referrer'])) {
-                $referer = $_REQUEST['referrer'];
+            if (isset($_REQUEST['referer'])) {
+                $referer = $_REQUEST['referer'];
                 view::redirect($referer);
             } else {
                 view::redirect('index', 'index');
             }
         } else {
-            $tp_error_msg = "密码错误";
-            include 'template/login.html';
+            view::render('login.html', ['tp_error_msg' => "密码错误"]);
         }
     } else {
-        $tp_error_msg = "用户名不存在";
-        include 'template/login.html';
+        view::render('login.html', ['tp_error_msg' => "用户名不存在"]);
     }
 }
