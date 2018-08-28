@@ -14,19 +14,19 @@ function ac_post()
         if (isset($_POST['title']) && isset($_POST['message'])) {
             $new_data = ['username' => $user["username"], 'title' => $_POST['title'], 'message' => $_POST['message'], 'timeline' => time()];
             $tid = database::getInstance()->insert($new_data, "tp_posts");
-            header('Location: index.php?mod=post&action=viewpost&tid=' . $tid);
+            view::redirect('post', 'viewpost', ['tid' => $tid]);
         } else {
-            include 'template/addpost.html';
+            view::render("addpost.html", ['user' => $user]);
         }
     } else {
-        echo('{"status":"invalid token"}');
+        view::redirect('index.php?mod=login&referrer=' . urlencode(view::get_url('post', 'post')));
     }
 }
 
 function ac_view()
 {
     $user = GetUser();
-    include 'template/postlist.html';
+    view::render("postlist.html", ['user' => $user]);
 }
 
 function ac_mypost()
@@ -56,7 +56,7 @@ function ac_viewpost()
         $rowCnt = 20 * ($page - 1);
         $post = database::getInstance()->fetchOne("select tp_posts.*,tp_user.nickname from tp_posts left join tp_user on (tp_posts.username=tp_user.username) where tid=:tid", ['tid' => $tid]);
         $comments = database::getInstance()->fetchAll("select tp_comments.*,tp_user.nickname from tp_comments left join tp_user on (tp_comments.username=tp_user.username) where tid=:tid and aid=1 LIMIT {$rowCnt},20 ", ['tid' => $tid]);
-        include 'template/viewpost.html';
+        view::render("viewpost.html", ['user' => $user, 'post' => $post, 'comments' => $comments]);
     } else {
         echo('{"status":"empty tid"}');
     }
@@ -79,7 +79,7 @@ function ac_comment()
             echo('{"status":"empty tid"}');
         }
     } else {
-        echo('{"status":"invalid token"}');
+        view::redirect('index.php?mod=login&referrer=' . urlencode(view::get_url('post', 'post')));
     }
 }
 
