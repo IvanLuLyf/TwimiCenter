@@ -1,6 +1,7 @@
 <?php
 header("Content-Type: text/html; charset=UTF-8");
 define("IN_TWIMI_PHP", "True", TRUE);
+define("IN_TWIMI_API", "True", TRUE);
 include "config.php";
 include "database.php";
 
