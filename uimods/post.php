@@ -19,7 +19,7 @@ function ac_post()
             view::render("addpost.html", ['user' => $user]);
         }
     } else {
-        view::redirect('index.php?mod=login&referrer=' . urlencode(view::get_url('post', 'post')));
+        view::redirect('index.php?mod=login&referer=' . urlencode(view::get_url('post', 'post')));
     }
 }
 
@@ -79,7 +79,7 @@ function ac_comment()
             echo('{"status":"empty tid"}');
         }
     } else {
-        view::redirect('index.php?mod=login&referrer=' . urlencode(view::get_url('post', 'viewpost', ['tid' => $_REQUEST['tid']])));
+        view::redirect('index.php?mod=login&referer=' . urlencode(view::get_url('post', 'viewpost', ['tid' => $_REQUEST['tid']])));
     }
 }
 
