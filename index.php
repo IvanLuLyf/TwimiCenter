@@ -3,6 +3,7 @@ header("Content-Type: text/html; charset=UTF-8");
 define("IN_TWIMI_PHP", "True", TRUE);
 include "config.php";
 include "database.php";
+include "view.php";
 
 include "uiauth.php";
 if (isset($_REQUEST['mod'])) {
