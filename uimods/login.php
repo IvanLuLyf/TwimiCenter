@@ -18,7 +18,12 @@ if (strtolower($_SERVER['REQUEST_METHOD']) == 'get') {
             database::getInstance()->update($updates, "tp_user", "id=:uid", ['uid' => $tp_id]);
             session_start();
             $_SESSION['access_token'] = $tp_token;
-            header('Location: index.php?mod=index');
+            if (isset($_REQUEST['referrer'])) {
+                $referer = $_REQUEST['referrer'];
+                view::redirect($referer);
+            } else {
+                view::redirect('index', 'index');
+            }
         } else {
             $tp_error_msg = "密码错误";
             include 'template/login.html';
