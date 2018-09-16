@@ -12,7 +12,21 @@ if (isset($_REQUEST['mod'])) {
         include "uimods/$mod.php";
         $action = isset($_REQUEST['action']) ? "ac_" . $_REQUEST['action'] : null;
         if ($action != null && is_callable($action)) {
-            call_user_func($action);
+            $func = new ReflectionFunction($action);
+            if ($func->getNumberOfParameters() > 0) {
+                $params = $func->getParameters();
+                $value = [];
+                foreach ($params as $param) {
+                    $type = '' . $param->getType();
+                    if (substr($type, -7) == "Service") {
+                        include "service/$type.php";
+                        $value[] = new $type();
+                    }
+                }
+                call_user_func_array($action, $value);
+            } else {
+                call_user_func($action);
+            }
         } else if ($action == null && is_callable("ac_index")) {
             call_user_func("ac_index");
         }
